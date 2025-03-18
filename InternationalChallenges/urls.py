@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from .views import receive_sensor_data
 from .views import get_jwt_token
+from .views import home
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", home, name="home"),
     path('api/sensor/', receive_sensor_data, name='receive_sensor_data'),
     path('get-token/', get_jwt_token, name='get_token'),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
