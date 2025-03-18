@@ -69,8 +69,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'DIRS': [BASE_DIR / 'templates'],
     },
 ]
+
 
 WSGI_APPLICATION = 'InternationalChallenges.wsgi.application'
 
@@ -145,4 +147,6 @@ SIMPLE_JWT = {
     'SIGNING_KEY': 'your_secret_key',  # Use Django's SECRET_KEY or custom key
 }
 
-
+# The urls the user is redirected to after a successful login or logout
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
