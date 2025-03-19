@@ -75,6 +75,7 @@ public:
     for (int i = 0; i < length % aes.blockSize(); i++) {
       aes.encryptBlock(&output[i * aes.blockSize()],
                        &input[i * aes.blockSize()]);
+      // Serial.println(i * aes.blockSize());
     }
     return true;
   };
@@ -85,6 +86,7 @@ public:
     for (int i = 0; i < length % aes.blockSize(); i++) {
       aes.decryptBlock(&output[i * aes.blockSize()],
                        &input[i * aes.blockSize()]);
+      // Serial.println(i * aes.blockSize());
     }
     return true;
   }

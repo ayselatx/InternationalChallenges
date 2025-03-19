@@ -54,9 +54,9 @@ void loop() {
 
   // copy the data to the tmp buffer
   memcpy((void *)tmpData1, (void *)&curr_mess, sizeof(send_message));
-  Serial.println("buff2 b4:");
+  Serial.println("buff1 b4:");
   for (int i = 0; i < tmpDataLen; i++) {
-    Serial.printf("0x%02x ", tmpData2[i]);
+    Serial.printf("0x%02x ", tmpData1[i]);
   }
   Serial.println("");
   memset(tmpData2, 0, tmpDataLen);
