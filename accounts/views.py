@@ -1,5 +1,5 @@
 # accounts/views.py
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth.views import (
@@ -25,3 +25,26 @@ class PasswordChangeView(BasePasswordChangeView):
 
 class PasswordChangeDoneView(BasePasswordChangeDoneView):
     template_name = "registration/password_change_done.html"
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
+from django import forms
+from django.contrib.auth import logout
+
+class AccountDeleteForm(forms.Form):
+    confirm = forms.BooleanField(label="I confirm that I want to delete my account")
+
+class AccountDeleteView(LoginRequiredMixin, FormView):
+    template_name = "registration/account_delete.html"
+    form_class = AccountDeleteForm
+    success_url = reverse_lazy("account_delete_done")
+
+    def form_valid(self, form):
+        user = self.request.user
+        logout(self.request)  # Log out the user before deleting their account
+        user.delete()
+        return super().form_valid(form)
+
+class AccountDeleteDoneView(TemplateView):
+    template_name = "registration/account_delete_done.html"

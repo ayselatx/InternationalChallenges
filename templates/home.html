@@ -10,7 +10,10 @@ You're logged in as '{{ user.username }}'!
   {% csrf_token %}
   <button type="submit">Log Out</button>
 </form>
+Account settings:
 <p><a href="{% url 'password_change' %}">Change password</a></p>
+<a href="{% url 'account_delete' %}" style="color: red;">Delete My Account</a>
+
 {% else %}
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">Log In</a>
