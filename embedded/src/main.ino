@@ -10,7 +10,7 @@ uint8_t default_key[32] = {141, 198, 196, 133, 18,  103, 218, 248,
                            196, 236, 212, 40,  76,  12,  15,  122,
                            15,  17,  25,  138, 162, 48};
 CryptoAdapter *crypto;
-constexpr size_t MAX_MESSAGE_SIZE = CryptoAdapter::toValidSize(
+size_t MAX_MESSAGE_SIZE = CryptoAdapter::toValidSize(
     sizeof(send_message) + // Base size of send_message (without data[])
     sizeof(message_data) + // Base size of message_data (without data[])
     sizeof(node_config));  // Max size of any payload (from the union)

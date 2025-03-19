@@ -15,6 +15,9 @@
 // std libs
 #include <algorithm>
 
+enum class encrypt_error : uint8_t { OK, BAD_DATA_LENGTH };
+enum class decrypt_error : uint8_t { OK, BAD_DATA_LENGTH, WRONG_HASH };
+
 // maybe use ed25519 for key exchange
 // https://rweather.github.io/arduinolibs/classEd25519.html
 class CryptoAdapter {
@@ -27,9 +30,6 @@ private:
   uint8_t _hmac_key[HMAC_KEY_SIZE];
 
 public:
-  enum class encrypt_error : uint8_t { OK, BAD_DATA_LENGTH };
-  enum class decrypt_error : uint8_t { OK, BAD_DATA_LENGTH, WRONG_HASH };
-
   CryptoAdapter(node_config *config);
 
   bool isCorrectDataLength(uint32_t length);
