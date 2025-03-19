@@ -38,7 +38,9 @@ void setup() {
   Serial.println(tmpDataLen % crypto.getBlockSize());
 
   tmpData1 = (uint8_t *)malloc(tmpDataLen);
+  memset(tmpData1, 0, tmpDataLen);
   tmpData2 = (uint8_t *)malloc(tmpDataLen);
+  memset(tmpData2, 0, tmpDataLen);
 }
 
 void loop() {
