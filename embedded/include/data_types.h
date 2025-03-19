@@ -65,7 +65,7 @@ private:
   }
 
 public:
-  bool setKey(const uint8_t[32] aesKey) { return aes.setKey(aesKey, 32); }
+  bool setKey(const uint8_t aesKey[32]) { return aes.setKey(aesKey, 32); }
 
   uint32_t getBlockSize() { return aes.blockSize(); }
 
