@@ -82,6 +82,7 @@ public:
   bool decryptData(uint8_t *output, const uint8_t *input, int length) {
     if (!checkCorrectDataLength(length))
       return false;
+    // bool done = false;
     for (int i = 0; i < length % aes.blockSize(); i++) {
       aes.decryptBlock(&output[i * aes.blockSize()],
                        &input[i * aes.blockSize()]);

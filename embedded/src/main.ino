@@ -5,7 +5,9 @@
 #include "data_types.h"
 
 DHT11 dht11(2);
-constexpr uint8_t default_key[32] = {};
+constexpr uint8_t default_key[32] = {141, 198, 196, 133, 18,  103, 218, 248,
+                                     196, 236, 212, 40,  76,  12,  15,  122,
+                                     15,  17,  25,  138, 162, 48};
 Crypto crypto;
 
 node_config current_config;
@@ -27,8 +29,8 @@ void setup() {
 
 void loop() {
   dht_measurement meas;
-  meas.humidity = 10;
-  meas.temperature = 20;
+  meas.humidity = 100;
+  meas.temperature = 30;
 
   send_message curr_mess;
   curr_mess.command = command_type::DHT_MEASUREMENT;
