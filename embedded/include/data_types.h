@@ -1,14 +1,14 @@
 #pragma once
 
-#include <AES.h>
-#include <Arduino.h>
-#include <Crypto.h>
+#include "constants.h"
+
+#include <cstddef>
 #include <cstdint>
-#include <string>
 
 #pragma pack(push, 1)
 struct node_config {
-  uint8_t aesKey[32];
+  uint8_t aes_key[AES_KEY_SIZE];
+  uint8_t hmac_key[HMAC_KEY_SIZE];
 };
 
 struct dht_config {
@@ -28,7 +28,7 @@ struct bmp_measurement {
   int pressure;
 };
 
-enum command_type {
+enum command_type : uint8_t {
   DHT_MEASUREMENT = 0,
   BMP_MEASUREMENT = 1,
   DHT_CONFIG = 2,
@@ -37,57 +37,16 @@ enum command_type {
 };
 
 struct send_message {
+  // iv and sha256 need to be readable without the encryption
+  uint8_t iv[IV_LENGTH];
+  uint8_t hash[SHA_HASH_SIZE];
+  // the encrypted data (of type message_data)
+  uint8_t data[];
+};
+
+struct message_data {
   command_type command;
-  union {
-    dht_measurement dht_meas;
-    bmp_measurement bmp_meas;
-    dht_config dht_cfg;
-    bmp_config bmp_cfg;
-    node_config node_cfg;
-  };
+  uint8_t data[];
 };
+
 #pragma pack(pop)
-
-class Crypto {
-private:
-  AES256 aes;
-
-  bool checkCorrectDataLength(int length) {
-    if (length < aes.blockSize()) {
-      // the data is too small
-      return false;
-    }
-    if (length % aes.blockSize() != 0) {
-      // the data needs to be padded to match the block size
-      return false;
-    }
-    return true;
-  }
-
-public:
-  bool setKey(const uint8_t aesKey[32]) { return aes.setKey(aesKey, 32); }
-
-  uint32_t getBlockSize() { return aes.blockSize(); }
-
-  bool encryptData(uint8_t *output, const uint8_t *input, int length) {
-    if (!checkCorrectDataLength(length))
-      return false;
-    for (int i = 0; i < length % aes.blockSize(); i++) {
-      aes.encryptBlock(&output[i * aes.blockSize()],
-                       &input[i * aes.blockSize()]);
-      // Serial.println(i * aes.blockSize());
-    }
-    return true;
-  };
-
-  bool decryptData(uint8_t *output, const uint8_t *input, int length) {
-    if (!checkCorrectDataLength(length))
-      return false;
-    for (int i = 0; i < length % aes.blockSize(); i++) {
-      aes.decryptBlock(&output[i * aes.blockSize()],
-                       &input[i * aes.blockSize()]);
-      // Serial.println(i * aes.blockSize());
-    }
-    return true;
-  }
-};
