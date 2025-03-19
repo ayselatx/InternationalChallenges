@@ -5,7 +5,7 @@ from .models import SensorData
 from .serializers import SensorDataSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.urls import path
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import requests
 
 def get_jwt_token(request):
@@ -21,6 +21,10 @@ def get_jwt_token(request):
     else:
         return JsonResponse({"error": "Invalid credentials"}, status=400)
 
+
+
+def home(request):
+    return HttpResponse("Welcome to InternationalChallenges API!")
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # ✅ Require authentication
