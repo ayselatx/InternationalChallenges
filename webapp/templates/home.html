@@ -5,6 +5,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+
 You're logged in as '{{ user.username }}'!
 <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
@@ -13,6 +14,32 @@ You're logged in as '{{ user.username }}'!
 Account settings:
 <p><a href="{% url 'password_change' %}">Change password</a></p>
 <a href="{% url 'account_delete' %}" style="color: red;">Delete My Account</a>
+
+<h2 class="mt-5 mb-2">Physical Properties</h2>  
+    
+    <div class="container d-flex flex-column flex-md-row justify-content-between mb-4">
+        <div class="flex-grow-1">
+            <h5 class="mt-4 mb-2">TEMPERATURE</h5>
+            <div class="progress">
+                <div class="progress-bar bg-primary" role="progressbar" id="progressBarTemperature"></div>
+                <span class="progress-value barNumbers" id="infoTemperature"></span>
+            </div>
+            <h5 class="mt-4 mb-2">HUMIDITY</h5>
+            <div class="progress">
+                <div class="progress-bar bg-primary" role="progressbar" id="progressBarHumidity"></div>
+                <span class="progress-value barNumbers" id="infoHumidity"></span>
+            </div>
+            <h5 class="mt-4 mb-2">PRESSURE</h5>
+            <div class="progress">
+                <div class="progress-bar bg-primary" role="progressbar" id="progressBarPressure"></div>
+                <span class="progress-value barNumbers" id="infoPressure"></span>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="updateTemperature(159)">Temperature</button>
+    <button onclick="updateHumidity(60)">Humidity</button>
+    <button onclick="updatePressure(1900)">Pressure</button>
 
 {% else %}
 <p>You are not logged in</p>
