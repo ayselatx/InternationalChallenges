@@ -59,12 +59,14 @@ void loop() {
     Serial.printf("0x%02x ", tmpData2[i]);
   }
   Serial.println("");
+  memset(tmpData2, 0, tmpDataLen);
   bool done = crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
   if (done) {
     Serial.println("YES ENCRPTED");
   } else {
     Serial.println("NO ENCRPTED");
   }
+  memset(tmpData1, 0, tmpDataLen);
 
   Serial.println("buff2 after:");
   for (int i = 0; i < tmpDataLen; i++) {
