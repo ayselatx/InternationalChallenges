@@ -38,11 +38,14 @@ void loop() {
   memcpy((void *)tmpData1, (void *)&curr_mess, sizeof(send_message));
   crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
 
+  Serial.printf("H: %d\nT: %d\n", ((send_message *)tmpData2)->dht_meas.humidity,
+                ((send_message *)tmpData2)->dht_meas.temperature);
+
   crypto.decryptData(tmpData1, tmpData2, tmpDataLen);
 
   // copy the data back from the tmp buffer
   memcpy((void *)&curr_mess, (void *)tmpData1, sizeof(send_message));
   Serial.printf("H: %d\nT: %d\n", curr_mess.dht_meas.humidity,
                 curr_mess.dht_meas.temperature);
-  delay(1);
+  delay(1000);
 }
