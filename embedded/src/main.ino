@@ -25,10 +25,10 @@ void setup() {
   } else {
     Serial.println("NO KEY");
   }
-  tmpDataLen =
-      sizeof(send_message) % crypto.getBlockSize() == 0
-          ? sizeof(send_message)
-          : sizeof(send_message) + sizeof(send_message) % crypto.getBlockSize();
+  tmpDataLen = sizeof(send_message) % crypto.getBlockSize() == 0
+                   ? sizeof(send_message)
+                   : sizeof(send_message) + crypto.getBlockSize() -
+                         sizeof(send_message) % crypto.getBlockSize();
 
   Serial.println("DATALEN: ");
   Serial.println(tmpDataLen);
