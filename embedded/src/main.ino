@@ -61,6 +61,11 @@ void loop() {
   Serial.println("");
 
   crypto.decryptData(tmpData1, tmpData2, tmpDataLen);
+  if (done) {
+    Serial.println("YES DECRPTED");
+  } else {
+    Serial.println("NO DECRPTED");
+  }
 
   // copy the data back from the tmp buffer
   memcpy((void *)&curr_mess, (void *)tmpData1, sizeof(send_message));
