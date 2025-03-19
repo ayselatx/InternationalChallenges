@@ -1,3 +1,6 @@
+# 1 "/var/folders/j6/9drks4rs10z608hgrdv80xh80000gn/T/tmpi0_a1w2h"
+#include <Arduino.h>
+# 1 "/Users/kamo/Studia/InternationalChallenges/embedded/src/main.ino"
 #include <Arduino.h>
 #include <DHT11.h>
 #include <LoRa.h>
@@ -5,9 +8,9 @@
 #include "data_types.h"
 
 DHT11 dht11(2);
-constexpr uint8_t default_key[32] = {141, 198, 196, 133, 18,  103, 218, 248,
-                                     196, 236, 212, 40,  76,  12,  15,  122,
-                                     15,  17,  25,  138, 162, 48};
+constexpr uint8_t default_key[32] = {141, 198, 196, 133, 18, 103, 218, 248,
+                                     196, 236, 212, 40, 76, 12, 15, 122,
+                                     15, 17, 25, 138, 162, 48};
 Crypto crypto;
 
 node_config current_config;
@@ -15,7 +18,9 @@ node_config current_config;
 uint8_t *tmpData1;
 uint8_t *tmpData2;
 uint32_t tmpDataLen;
-
+void setup();
+void loop();
+#line 19 "/Users/kamo/Studia/InternationalChallenges/embedded/src/main.ino"
 void setup() {
   Serial.begin(9600);
   bool done = crypto.setKey(default_key);
@@ -49,7 +54,7 @@ void loop() {
   curr_mess.command = command_type::DHT_MEASUREMENT;
   curr_mess.dht_meas = meas;
 
-  // copy the data to the tmp buffer
+
   memcpy((void *)tmpData1, (void *)&curr_mess, sizeof(send_message));
   Serial.println("buff1 b4:");
   for (int i = 0; i < tmpDataLen; i++) {
@@ -80,7 +85,7 @@ void loop() {
     Serial.println("NO DECRPTED");
   }
 
-  // copy the data back from the tmp buffer
+
   memcpy((void *)&curr_mess, (void *)tmpData1, sizeof(send_message));
   Serial.printf("H: %d\nT: %d\n", curr_mess.dht_meas.humidity,
                 curr_mess.dht_meas.temperature);
