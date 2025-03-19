@@ -17,7 +17,8 @@ uint8_t *tmpData2;
 uint32_t tmpDataLen;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  delay(2000);
   bool done = crypto.setKey(default_key);
   if (done) {
     Serial.println("YES KEY");
