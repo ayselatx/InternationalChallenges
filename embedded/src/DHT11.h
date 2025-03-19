@@ -12,7 +12,6 @@
 #define DHT11_h
 
 #include "Arduino.h"
-#include <AESlib.h>
 
 /**
  * DHT11 Class
@@ -28,12 +27,6 @@ public:
    * @param pin: Digital pin number on the Arduino board to which the DHT11 sensor is connected.
    */
   DHT11(int pin);
-
-  // Déclaration de la méthode pour chiffrer les données
-  int encryptData(int temperature, int humidity, byte encryptedData[16]);
-
-  // Déclaration de la méthode pour déchiffrer les données
-  int decryptData(byte encryptedData[16], int &temperature, int &humidity);
 
   /**
    * Sets the delay between consecutive sensor readings.
@@ -67,8 +60,6 @@ public:
    * @return: true if the reading is successful, false if it fails due to timeout or checksum error.
    */
   int readTemperatureHumidity(int &temperature, int &humidity);
-
-  int readEncryptedTemperatureHumidity(int &temperature, int &humidity);
 
   // Constants to represent error codes.
   static const int ERROR_CHECKSUM = 254;    // Error code indicating checksum mismatch.
