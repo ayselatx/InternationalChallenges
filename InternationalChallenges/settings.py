@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'InternationalChallenges',
     'rest_framework_simplejwt',
+    'accounts', # our own app for registration
 ]
 
 
@@ -74,7 +75,6 @@ TEMPLATES = [
         'DIRS': [BASE_DIR / 'templates'],
     },
 ]
-
 
 WSGI_APPLICATION = 'InternationalChallenges.wsgi.application'
 

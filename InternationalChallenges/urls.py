@@ -27,6 +27,7 @@ urlpatterns = [
     path('get-token/', get_jwt_token, name='get_token'),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("", TemplateView.as_view(template_name="home.html"), name="home")
 ]
