@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AES.h>
+#include <Arduino.h>
 #include <Crypto.h>
 #include <cstdint>
 #include <string>
@@ -8,7 +9,6 @@
 #pragma pack(push, 1)
 struct node_config {
   uint8_t aesKey[32];
-  void setAesFromString(const uint8_t key[32]) {}
 };
 
 struct dht_config {
@@ -47,3 +47,43 @@ struct send_message {
   };
 };
 #pragma pack(pop)
+
+class Crypto {
+private:
+  AES256 aes;
+
+  bool checkCorrectDataLength(int length) {
+    if (length < aes.blockSize()) {
+      // the data is too small
+      return false;
+    }
+    if (length % aes.blockSize() != 0) {
+      // the data needs to be padded to match the block size
+      return false;
+    }
+    return true;
+  }
+
+public:
+  bool setKey(const uint8_t[32] aesKey) { return aes.setKey(aesKey, 32); }
+
+  uint32_t getBlockSize() { return aes.blockSize(); }
+
+  bool encryptData(uint8_t *output, const uint8_t *input, int length) {
+    if (!checkCorrectDataLength(length))
+      return false;
+    for (int i = 0; i < length % aes.blockSize(); i++) {
+      aes.encryptBlock(output[i * aes.blockSize()], input[i * aes.blockSize()]);
+    }
+    return true;
+  };
+
+  bool decryptData(uint8_t *output, const uint8_t *input, int length) {
+    if (!checkCorrectDataLength(length))
+      return false;
+    for (int i = 0; i < length % aes.blockSize(); i++) {
+      aes.decryptBlock(output[i * aes.blockSize()], input[i * aes.blockSize()]);
+    }
+    return true;
+  }
+};
