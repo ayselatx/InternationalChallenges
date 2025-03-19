@@ -73,10 +73,8 @@ public:
     if (!checkCorrectDataLength(length))
       return false;
     for (int i = 0; i < length % aes.blockSize(); i++) {
-      bool done = aes.encryptBlock(&output[i * aes.blockSize()],
-                                   &input[i * aes.blockSize()]);
-      if (!done)
-        return false;
+      aes.encryptBlock(&output[i * aes.blockSize()],
+                       &input[i * aes.blockSize()]);
     }
     return true;
   };
@@ -85,10 +83,8 @@ public:
     if (!checkCorrectDataLength(length))
       return false;
     for (int i = 0; i < length % aes.blockSize(); i++) {
-      bool done = aes.decryptBlock(&output[i * aes.blockSize()],
-                                   &input[i * aes.blockSize()]);
-      if (!done)
-        return false;
+      aes.decryptBlock(&output[i * aes.blockSize()],
+                       &input[i * aes.blockSize()]);
     }
     return true;
   }

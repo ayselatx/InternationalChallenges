@@ -42,12 +42,7 @@ void loop() {
   for (int i = 0; i < tmpDataLen; i++) {
     Serial.printf("0x%02x ", tmpData1[i]);
   }
-  bool done = crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
-  if (done) {
-    Serial.println("YES ENCRPTED");
-  } else {
-    Serial.println("NO ENCRPTED");
-  }
+  crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
 
   Serial.println("buff1 after:");
   for (int i = 0; i < tmpDataLen; i++) {
@@ -61,11 +56,6 @@ void loop() {
   Serial.println("");
 
   crypto.decryptData(tmpData1, tmpData2, tmpDataLen);
-  if (done) {
-    Serial.println("YES DECRPTED");
-  } else {
-    Serial.println("NO DECRPTED");
-  }
 
   // copy the data back from the tmp buffer
   memcpy((void *)&curr_mess, (void *)tmpData1, sizeof(send_message));
