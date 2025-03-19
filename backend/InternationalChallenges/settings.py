@@ -27,9 +27,7 @@ SECRET_KEY = 'django-insecure-_dmw^)nnx-u&s5q(2#bg!db)2g4v5gmyrj_0#vmu$!yqzs=$5-
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.28.212',
-    'localhost',
-    '127.0.0.1'
+    '*'
 ]
 
 
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'InternationalChallenges',
     'rest_framework_simplejwt',
+    'accounts', # our own app for registration
 ]
 
 
@@ -73,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'DIRS': [BASE_DIR / 'templates'],
     },
 ]
 
@@ -149,4 +149,6 @@ SIMPLE_JWT = {
     'SIGNING_KEY': 'your_secret_key',  # Use Django's SECRET_KEY or custom key
 }
 
-
+# The urls the user is redirected to after a successful login or logout
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
