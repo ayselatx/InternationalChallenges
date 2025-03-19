@@ -38,9 +38,18 @@ void loop() {
 
   // copy the data to the tmp buffer
   memcpy((void *)tmpData1, (void *)&curr_mess, sizeof(send_message));
-  crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
+  Serial.println("buff1 b4:");
+  for (int i = 0; i < tmpDataLen; i++) {
+    Serial.printf("0x%02x ", tmpData1[i]);
+  }
+  bool done = crypto.encryptData(tmpData2, tmpData1, tmpDataLen);
+  if (done) {
+    Serial.println("YES ENCRPTED");
+  } else {
+    Serial.println("NO ENCRPTED");
+  }
 
-  Serial.println("buff1:");
+  Serial.println("buff1 after:");
   for (int i = 0; i < tmpDataLen; i++) {
     Serial.printf("0x%02x ", tmpData1[i]);
   }
