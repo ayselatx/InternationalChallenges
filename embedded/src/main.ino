@@ -1,7 +1,8 @@
-#include "Arduino.h"
+#include <Arduino.h>
+#include <DHT11.h>
+#include <LoRa.h>
 
 #include "data_types.h"
-#include <DHT11.h>
 
 DHT11 dht11(2);
 
