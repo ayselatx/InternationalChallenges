@@ -141,115 +141,22 @@ Account settings:
       </div>
     </div>
 
-<<<<<<< Updated upstream
+    <div class="col-4 col-md-3 d-flex justify-content-center mb-4 mb-md-0">
+        <img src="{% static 'images/UMons.png' %}" class="img-fluid rounded" alt="Right Image">
+      </div>
 
 
 </section>
-=======
-<!-- Right side with a single chart -->
-<div class="col">
-  <div class="lc-block"></div>
-  <h2 class="mt-5 mb-2 text-center">History</h2>
 
-  <!-- Single Chart for Temperature, Humidity, and Pressure -->
-  <div class="mb-4">
-    <canvas id="historyChart"></canvas>
-  </div>
+
 </div>
 </div>
+</div>
+</div>
+</div>
+{% endif %} <!-- Closing the if-statement -->
 
-<!-- Chart.js Script -->
-<script>
-// Data for the chart
-var timeData = []; // This will hold time data (e.g., hours, days, etc.)
-var tempData = [];
-var humidityData = [];
-var pressureData = [];
-
-// Function to simulate updating temperature data
-function updateTemperature(temp) {
-  timeData.push(new Date().toLocaleTimeString()); // Add the current time
-  tempData.push(temp);
-  updateChart();
-}
-
-// Function to simulate updating humidity data
-function updateHumidity(humidity) {
-  timeData.push(new Date().toLocaleTimeString());
-  humidityData.push(humidity);
-  updateChart();
-}
-
-// Function to simulate updating pressure data
-function updatePressure(pressure) {
-  timeData.push(new Date().toLocaleTimeString());
-  pressureData.push(pressure);
-  updateChart();
-}
-
-// Function to update the chart with the new data
-function updateChart() {
-  historyChart.update();
-}
-
-// Creating a single chart to show all three data series
-var historyChart = new Chart(document.getElementById('historyChart'), {
-  type: 'line',
-  data: {
-    labels: timeData,  // Time as the x-axis
-    datasets: [
-      {
-        label: 'Temperature (°C)',
-        data: tempData,
-        borderColor: 'rgba(255, 99, 132, 1)', // Red for temperature
-        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Light red for temperature
-        fill: true
-      },
-      {
-        label: 'Humidity (%)',
-        data: humidityData,
-        borderColor: 'rgba(54, 162, 235, 1)', // Blue for humidity
-        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Light blue for humidity
-        fill: true
-      },
-      {
-        label: 'Pressure (hPa)',
-        data: pressureData,
-        borderColor: 'rgba(75, 192, 192, 1)', // Green for pressure
-        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light green for pressure
-        fill: true
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      x: {
-        type: 'linear',  // Use linear scale for time
-        position: 'bottom',
-        title: {
-          display: true,
-          text: 'Time'
-        }
-      },
-      y: {
-        beginAtZero: false,
-        title: {
-          display: true,
-          text: 'Values'
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        display: true,  // Display the legend to distinguish between lines
-        position: 'top'
-      }
-    }
-  }
-});
-</script>
->>>>>>> Stashed changes
+{% endblock %} <!-- Closing the content block -->
 
 
 
