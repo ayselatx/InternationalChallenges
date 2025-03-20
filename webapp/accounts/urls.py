@@ -19,4 +19,5 @@ urlpatterns = [
     ),
     path("delete/", AccountDeleteView.as_view(), name="account_delete"),
     path("delete/done/", AccountDeleteDoneView.as_view(), name="account_delete_done"),
+
 ]

@@ -1,13 +1,49 @@
-<!-- templates/registration/signup.html -->
 {% extends "base.html" %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Create Account{% endblock %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button type="submit">Sign Up</button>
-</form>
+<section class="vh-100 gradient-custom d-flex flex-column">
+
+    <!-- Centered Form -->
+    <div class="container d-flex justify-content-center align-items-center text-center min-vh-100">
+        <div class="col-md-6 col-lg-4 p-4 rounded shadow" style="background: rgba(255, 255, 255, 0.2);">
+            <h2 class="text-center text-white mb-4">Create an Account</h2>
+            <form method="post" class="w-100">
+                {% csrf_token %}
+                
+                <div class="mb-3 text-center">
+                    {{ form.username.label_tag }}
+                    <div class="input-group w-100 justify-content-center">
+                        {{ form.username }}
+                    </div>
+                </div>
+
+                <div class="mb-3 text-center">
+                    {{ form.password1.label_tag }}
+                    <div class="input-group w-100 justify-content-center">
+                        {{ form.password1 }}
+                    </div>
+                </div>
+
+                <div class="mb-3 text-center">
+                    {{ form.password2.label_tag }}
+                    <div class="input-group w-100 justify-content-center">
+                        {{ form.password2 }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            </form>
+
+            <p class="mt-3 text-center text-white">
+                Already have an account? <a href="{% url 'login' %}" class="text-white">Log in here</a>.
+            </p>
+        </div>
+    </div>
+
+</section>
 {% endblock %}

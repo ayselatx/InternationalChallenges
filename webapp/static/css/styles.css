@@ -170,6 +170,27 @@ h2, .h2{
   outline-width: 15;
 }
 
+/* Center the input fields */
+input {
+  width: 100%; /* Ensures full width */
+  max-width: 300px; /* Restricts maximum width */
+  margin: 0 auto; /* Centers horizontally */
+  display: block; /* Prevents inline issues */
+}
+
+/* Style the input group for alignment */
+.input-group {
+  justify-content: center; /* Centers content inside */
+}
+
+/* Center form inside the box */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .progress-ring:before {
   content: "";
   position: absolute;
