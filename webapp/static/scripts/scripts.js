@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       pressureChart.update();
   }
 
- // Chart.js setup for each chart
+ // Temperature chart setup
 var temperatureChart = new Chart(document.getElementById('temperatureChart'), {
   type: 'line', // Line chart type for temperature
   data: {
@@ -103,6 +103,9 @@ var temperatureChart = new Chart(document.getElementById('temperatureChart'), {
                   text: 'Time',
                   color: 'white' // X-axis label color to white
               },
+              ticks: {
+                  color: 'white' // X-axis ticks color to white
+              },
               grid: {
                   color: 'white' // Grid line color to white
               }
@@ -114,6 +117,9 @@ var temperatureChart = new Chart(document.getElementById('temperatureChart'), {
                   text: 'Temperature (°C)',
                   color: 'white' // Y-axis label color to white
               },
+              ticks: {
+                  color: 'white' // Y-axis ticks color to white
+              },
               grid: {
                   color: 'white' // Grid line color to white
               }
@@ -122,6 +128,7 @@ var temperatureChart = new Chart(document.getElementById('temperatureChart'), {
   }
 });
 
+// Humidity chart setup
 var humidityChart = new Chart(document.getElementById('humidityChart'), {
   type: 'line', // Line chart type for humidity
   data: {
@@ -152,6 +159,9 @@ var humidityChart = new Chart(document.getElementById('humidityChart'), {
                   text: 'Time',
                   color: 'white' // X-axis label color to white
               },
+              ticks: {
+                  color: 'white' // X-axis ticks color to white
+              },
               grid: {
                   color: 'white' // Grid line color to white
               }
@@ -163,6 +173,9 @@ var humidityChart = new Chart(document.getElementById('humidityChart'), {
                   text: 'Humidity (%)',
                   color: 'white' // Y-axis label color to white
               },
+              ticks: {
+                  color: 'white' // Y-axis ticks color to white
+              },
               grid: {
                   color: 'white' // Grid line color to white
               }
@@ -171,6 +184,7 @@ var humidityChart = new Chart(document.getElementById('humidityChart'), {
   }
 });
 
+// Pressure chart setup
 var pressureChart = new Chart(document.getElementById('pressureChart'), {
   type: 'line', // Line chart type for pressure
   data: {
@@ -201,6 +215,9 @@ var pressureChart = new Chart(document.getElementById('pressureChart'), {
                   text: 'Time',
                   color: 'white' // X-axis label color to white
               },
+              ticks: {
+                  color: 'white' // X-axis ticks color to white
+              },
               grid: {
                   color: 'white' // Grid line color to white
               }
@@ -211,6 +228,9 @@ var pressureChart = new Chart(document.getElementById('pressureChart'), {
                   display: true,
                   text: 'Pressure (hPa)',
                   color: 'white' // Y-axis label color to white
+              },
+              ticks: {
+                  color: 'white' // Y-axis ticks color to white
               },
               grid: {
                   color: 'white' // Grid line color to white
