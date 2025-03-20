@@ -10,27 +10,32 @@
 <section class="vh-100 gradient-custom">
     <nav class="navbar navbar-expand-lg py-3 navbar-light bg-white">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'home' %}">
                 <img src="{% static 'images/logo.jpg' %}" width="48" height="48" class="align-middle me-1 img-fluid" alt="My Website">
                 My Site
             </a>
-    
+      
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar3" aria-controls="myNavbar3" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
-            <div class="lc-block collapse navbar-collapse" id="myNavbar3"></div>
-
-            <div class="lc-block ms-auto d-grid gap-2 d-lg-block">
-                <form action="{% url 'logout' %}" method="post" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Log Out</button>
-                </form>
-                <a class="btn btn-primary" href="{% url 'password_change' %}" role="button">Change Password</a>
-                <a class="btn btn-secondary" href="{% url 'account_delete' %}" role="button">Delete Account</a>
+      
+            <div class="collapse navbar-collapse" id="myNavbar3">
+                <ul class="navbar-nav me-auto">
+                    <!-- Autres éléments de la navigation -->
+                </ul>
+      
+                <!-- Pour les grands écrans, on met les boutons en ligne et on ajuste leur taille -->
+                <div class="lc-block ms-auto d-grid gap-2 d-lg-flex d-lg-row">
+                    <form action="{% url 'logout' %}" method="post" class="d-grid w-100">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary w-100 custom-btn">Log Out</button>
+                    </form>
+                    <a class="btn btn-primary w-100 custom-btn" href="{% url 'password_change' %}" role="button">Change Password</a>
+                    <a class="btn btn-danger w-100 custom-btn" href="{% url 'account_delete' %}" role="button">Delete Account</a>
+                </div>
             </div>
         </div>
-    </nav>
+      </nav>
 
     <!-- Centered Delete Account Section with a Semi-Transparent Box -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100">

@@ -19,7 +19,7 @@
     
 <nav class="navbar navbar-expand-lg py-3 navbar-light bg-white">
   <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="{% url 'home' %}">
           <img src="{% static 'images/logo.jpg' %}" width="48" height="48" class="align-middle me-1 img-fluid" alt="My Website">
           My Site
       </a>
@@ -113,6 +113,7 @@ Account settings:
 </div>
 <div class="col">
 		<div class="lc-block"></div>
+    <h2 class="mt-5 mb-2 text-center">History</h2>  
 	</div>
 </div>
  
@@ -121,29 +122,134 @@ Account settings:
 
 
 {% else %}
-<div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-          <div class="card-body p-5 text-center">
+<div class="container vh-100 d-flex align-items-center">
+  <div class="row justify-content-center align-items-center  ">
 
-            <div class="mb-md-5 mt-md-4 pb-5">
+    <!-- Left Image -->
+    <div class="col-4 col-md-3 d-flex justify-content-center mb-4 mb-md-0">
+      <img src="{% static 'images/PUT.png' %}" class="img-fluid rounded" alt="Left Image">
+    </div>
 
-              <h2 class="fw-bold mb-2 text-white">You are not logged in</h2>
-              <p class="text-white-50 mb-5">You are not logged in</p>
-            <a href="{% url 'login' %}">Log In</a>
-        </div>
-          </div>
+    <!-- Logout Message -->
+    <div class="col-12 col-md-6 mb-4 mb-md-0">
+      <div class="card text-white text-center shadow-lg" style="border-radius: 1rem; background: rgba(255, 255, 255, 0.2);">
+        <div class="card-body p-5">
+          <h2 class="fw-bold mb-2 text-white">You are not logged in</h2>
+          <p class="text-white-50 mb-4">You are not logged in</p>
+          <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg px-5">Log In</a>
         </div>
       </div>
     </div>
-</div>
-{% endif %}
-{% endblock %}
 
+<<<<<<< Updated upstream
 
 
 </section>
+=======
+<!-- Right side with a single chart -->
+<div class="col">
+  <div class="lc-block"></div>
+  <h2 class="mt-5 mb-2 text-center">History</h2>
+
+  <!-- Single Chart for Temperature, Humidity, and Pressure -->
+  <div class="mb-4">
+    <canvas id="historyChart"></canvas>
+  </div>
+</div>
+</div>
+
+<!-- Chart.js Script -->
+<script>
+// Data for the chart
+var timeData = []; // This will hold time data (e.g., hours, days, etc.)
+var tempData = [];
+var humidityData = [];
+var pressureData = [];
+
+// Function to simulate updating temperature data
+function updateTemperature(temp) {
+  timeData.push(new Date().toLocaleTimeString()); // Add the current time
+  tempData.push(temp);
+  updateChart();
+}
+
+// Function to simulate updating humidity data
+function updateHumidity(humidity) {
+  timeData.push(new Date().toLocaleTimeString());
+  humidityData.push(humidity);
+  updateChart();
+}
+
+// Function to simulate updating pressure data
+function updatePressure(pressure) {
+  timeData.push(new Date().toLocaleTimeString());
+  pressureData.push(pressure);
+  updateChart();
+}
+
+// Function to update the chart with the new data
+function updateChart() {
+  historyChart.update();
+}
+
+// Creating a single chart to show all three data series
+var historyChart = new Chart(document.getElementById('historyChart'), {
+  type: 'line',
+  data: {
+    labels: timeData,  // Time as the x-axis
+    datasets: [
+      {
+        label: 'Temperature (°C)',
+        data: tempData,
+        borderColor: 'rgba(255, 99, 132, 1)', // Red for temperature
+        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Light red for temperature
+        fill: true
+      },
+      {
+        label: 'Humidity (%)',
+        data: humidityData,
+        borderColor: 'rgba(54, 162, 235, 1)', // Blue for humidity
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Light blue for humidity
+        fill: true
+      },
+      {
+        label: 'Pressure (hPa)',
+        data: pressureData,
+        borderColor: 'rgba(75, 192, 192, 1)', // Green for pressure
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light green for pressure
+        fill: true
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        type: 'linear',  // Use linear scale for time
+        position: 'bottom',
+        title: {
+          display: true,
+          text: 'Time'
+        }
+      },
+      y: {
+        beginAtZero: false,
+        title: {
+          display: true,
+          text: 'Values'
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,  // Display the legend to distinguish between lines
+        position: 'top'
+      }
+    }
+  }
+});
+</script>
+>>>>>>> Stashed changes
 
 
 
