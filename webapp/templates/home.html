@@ -3,46 +3,117 @@
 
 {% block title %}Home{% endblock %}
 
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'scripts/scripts.js' %}"></script>
+
 {% block content %}
+<section class="vh-100 gradient-custom">
+
+
 {% if user.is_authenticated %}
 
-You're logged in as '{{ user.username }}'!
-<form action="{% url 'logout' %}" method="post">
-  {% csrf_token %}
-  <button type="submit">Log Out</button>
-</form>
+ 
+  
+    
+<nav class="navbar navbar-expand-lg py-3 navbar-light bg-white">
+	<div class="container">
+		<a class="navbar-brand" href="#">
+            <img src="{% static 'images/logo.jpg' %}" width="48" height="48" class="align-middle me-1 img-fluid" alt="My Website">
+			My Site</a>
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar3" aria-controls="myNavbar3" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+
+		<div class="lc-block collapse navbar-collapse" id="myNavbar3">
+                </ul> <!-- /lc_nav_menu --> </div>
+
+			<div class="lc-block ms-auto d-grid gap-2 d-lg-block">
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Log Out</button>
+                </form>
+				    <a class="btn btn-primary" href="{% url 'password_change' %}" role="button">Change Password</a>
+				    <a class="btn btn-primary" href="{% url 'account_delete' %}" role="button">Delete Account</a>
+			</div>
+		</div>
+	</div>
+</nav>
+ 
+ 
+  
+
+<!-- You're logged in as '{{ user.username }}'!
+
 Account settings:
 <p><a href="{% url 'password_change' %}">Change password</a></p>
-<a href="{% url 'account_delete' %}" style="color: red;">Delete My Account</a>
+<a href="{% url 'account_delete' %}" style="color: red;">Delete My Account</a> -->
 
-<h2 class="mt-5 mb-2">Physical Properties</h2>  
+  
     
-    <div class="container d-flex flex-column flex-md-row justify-content-between mb-4">
-        <div class="flex-grow-1">
-            <h5 class="mt-4 mb-2">TEMPERATURE</h5>
-            <div class="progress">
-                <div class="progress-bar bg-primary" role="progressbar" id="progressBarTemperature"></div>
-                <span class="progress-value barNumbers" id="infoTemperature"></span>
-            </div>
-            <h5 class="mt-4 mb-2">HUMIDITY</h5>
-            <div class="progress">
-                <div class="progress-bar bg-primary" role="progressbar" id="progressBarHumidity"></div>
-                <span class="progress-value barNumbers" id="infoHumidity"></span>
-            </div>
-            <h5 class="mt-4 mb-2">PRESSURE</h5>
-            <div class="progress">
-                <div class="progress-bar bg-primary" role="progressbar" id="progressBarPressure"></div>
-                <span class="progress-value barNumbers" id="infoPressure"></span>
+<div class="row row-cols-1 row-cols-lg-2 g-0 overflow-hidden">
+	<div class="col">
+		<div class="lc-block"></div>
+        
+        <h2 class="mt-5 mb-2 text-center">Physical Properties</h2>  
+            
+        <div class="container d-flex flex-column flex-md-row justify-content-between mb-4">
+            <div class="flex-grow-1">
+                <h5 class="mt-4 mb-2">TEMPERATURE</h5>
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" id="progressBarTemperature"></div>
+                    <span class="progress-value barNumbers" id="infoTemperature"></span>
+                </div>
+                <h5 class="mt-4 mb-2">HUMIDITY</h5>
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" id="progressBarHumidity"></div>
+                    <span class="progress-value barNumbers" id="infoHumidity"></span>
+                </div>
+                <h5 class="mt-4 mb-2">PRESSURE</h5>
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" id="progressBarPressure"></div>
+                    <span class="progress-value barNumbers" id="infoPressure"></span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <button onclick="updateTemperature(159)">Temperature</button>
-    <button onclick="updateHumidity(60)">Humidity</button>
-    <button onclick="updatePressure(1900)">Pressure</button>
+        <button onclick="updateTemperature(159)">Temperature</button>
+        <button onclick="updateHumidity(60)">Humidity</button>
+        <button onclick="updatePressure(1900)">Pressure</button>
+	</div>
+	<div class="col">
+		<div class="lc-block"></div>
+	</div>
+</div>
+ 
+ 
+  
+
 
 {% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a>
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-white">You are not logged in</h2>
+              <p class="text-white-50 mb-5">You are not logged in</p>
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 {% endif %}
 {% endblock %}
+
+</section>
+
+ 

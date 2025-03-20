@@ -2,7 +2,37 @@
 
 {% block title %}Delete Account{% endblock %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'scripts/scripts.js' %}"></script>
+
 {% block content %}
+<section class="vh-100 gradient-custom">
+    <nav class="navbar navbar-expand-lg py-3 navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'images/logo.jpg' %}" width="48" height="48" class="align-middle me-1 img-fluid" alt="My Website">
+                My Site</a>
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar3" aria-controls="myNavbar3" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+    
+            <div class="lc-block collapse navbar-collapse" id="myNavbar3">
+                    </ul> <!-- /lc_nav_menu --> </div>
+    
+                <div class="lc-block ms-auto d-grid gap-2 d-lg-block">
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Log Out</button>
+                    </form>
+                        <a class="btn btn-primary" href="{% url 'password_change' %}" role="button">Change Password</a>
+                        <a class="btn btn-secondary" href="{% url 'account_delete' %}" role="button">Delete Account</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 <h2>Delete Account</h2>
 <p>Are you sure you want to delete your account? This action cannot be undone.</p>
 
@@ -14,3 +44,4 @@
 
 <a href="{% url 'home' %}">Cancel</a>
 {% endblock %}
+</section>
