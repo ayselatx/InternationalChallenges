@@ -9,7 +9,7 @@
 <script src="{% static 'scripts/scripts.js' %}"></script>
 
 {% block content %}
-<section class="vh-100 gradient-custom">
+<section class="min-vh-100 gradient-custom">
 
 
 {% if user.is_authenticated %}
@@ -111,11 +111,39 @@ Account settings:
         </div>
 	</div>
 </div>
-<div class="col">
-		<div class="lc-block"></div>
-    <h2 class="mt-5 mb-2 text-center">History</h2>  
-	</div>
+
+
+
+<div class="row row-cols-1 g-0 overflow-hidden">
+  <!-- Graphique pour la température -->
+  <div class="col mb-4">
+      <div class="column-card">
+          <h2 class="mt-5 mb-2 text-center text-white">Temperature History</h2>
+          <!-- Canvas pour le graphique de la température -->
+          <canvas id="temperatureChart"></canvas>
+      </div>
+  </div>
+
+  <!-- Graphique pour l'humidité -->
+  <div class="col mb-4">
+      <div class="column-card">
+          <h2 class="mt-5 mb-2 text-center text-white">Humidity History</h2>
+          <!-- Canvas pour le graphique de l'humidité -->
+          <canvas id="humidityChart"></canvas>
+      </div>
+  </div>
+
+  <!-- Graphique pour la pression -->
+  <div class="col mb-4">
+      <div class="column-card">
+          <h2 class="mt-5 mb-2 text-center text-white">Pressure History</h2>
+          <!-- Canvas pour le graphique de la pression -->
+          <canvas id="pressureChart"></canvas>
+      </div>
+  </div>
 </div>
+
+
  
  
   
