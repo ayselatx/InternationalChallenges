@@ -39,3 +39,17 @@ function startProgress() {
 }
 
 
+
+function updateProgress(value) {
+  let progressBar = document.getElementById("progressBarTemperature");
+  let overlay = document.getElementById("progressOverlayTemperature");
+
+  let percentage = (value / 50) * 100;  // Assuming max temp is 50°
+  progressBar.style.width = "100%";    // Gradient always fills the bar
+  overlay.style.width = (100 - percentage) + "%"; // Covers unused area
+}
+
+// Example: Call this function with a value (e.g., 25°)
+document.addEventListener("DOMContentLoaded", function () {
+  updateProgress(25);
+});
