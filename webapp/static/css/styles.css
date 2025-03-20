@@ -79,6 +79,78 @@
     scroll-behavior: smooth;
   }
 }
+/* Personnaliser la taille des boutons uniquement pour les grands écrans */
+@media (min-width: 992px) {
+  .custom-btn {
+      height: auto;  /* Permet de réduire la hauteur des boutons */
+      padding-top: 10px;  /* Ajuste l'espacement supérieur */
+      padding-bottom: 10px;  /* Ajuste l'espacement inférieur */
+      white-space: nowrap;  /* Empêche le texte de se diviser sur plusieurs lignes */
+  }
+
+  .navbar-collapse.show .custom-btn {
+      width: 100%; /* Lorsque le menu est activé (hamburger menu), les boutons deviennent larges */
+  }
+}
+
+/* Assurer que les boutons prennent la largeur complète sur les petits écrans */
+@media (max-width: 991px) {
+  .custom-btn {
+      width: 100%;
+      height: auto;
+  }
+}
+
+/* Navbar height adjustment */
+.navbar {
+  padding-top: 5px; /* Réduit la hauteur en haut */
+  padding-bottom: 5px; /* Réduit la hauteur en bas */
+}
+
+/* Logo dans la navbar */
+.navbar-brand {
+  padding: 0; /* Supprime les marges internes du logo */
+  display: flex;
+  align-items: center; /* Aligne verticalement l'image du logo et le texte */
+  height: 40px; /* Limite la hauteur du logo et du texte */
+}
+
+/* Navbar items (liens de navigation) */
+.navbar-nav .nav-item {
+  padding: 0 10px; /* Réduit l'espace entre les éléments */
+}
+
+/* Navbar-toggler button (les 3 barres sur petit écran) */
+.navbar-toggler {
+  padding: 8px 10px; /* Réduit l'espace autour du bouton burger */
+}
+
+/* Boutons dans la navbar */
+.custom-btn {
+  font-size: 14px;
+  padding: 10px 12px; /* Ajuste la taille des boutons */
+  transition: all 0.3s ease; /* Transition pour un effet fluide */
+}
+
+/* Ajuster la hauteur des boutons quand ils sont en ligne sur grand écran */
+@media (min-width: 992px) {
+  .custom-btn {
+      padding: 8px 16px; /* Réduit la hauteur des boutons en grand écran */
+  }
+}
+
+/* Ajustement du padding pour les petits écrans */
+@media (max-width: 992px) {
+  .navbar {
+      padding-top: 8px;
+      padding-bottom: 8px; /* Plus de marge pour les petits écrans */
+  }
+}
+
+
+
+
+
 
 
 body {
