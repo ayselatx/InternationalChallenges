@@ -31,6 +31,15 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django import forms
 from django.contrib.auth import logout
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from .forms import CustomPasswordChangeForm  # Import your custom form
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    success_url = reverse_lazy('registration/password_change_done.html')
+    template_name = 'registration/password_change_form.html'  # Corrected
+
 
 class AccountDeleteForm(forms.Form):
     confirm = forms.BooleanField(label="I confirm that I want to delete my account")

@@ -237,22 +237,56 @@ h2, .h2{
   background-color: #cd7be3;
 }
 
-.btn-tertiary{
-  outline-color: white;
-  outline-width: 15;
+.btn-tertiary {
+  background-color: #0d6efd;
+  color: white; /* White text */
+  border: none; /* Removes outline/border */
+  border-radius: 100%;
+  height: 27px !important;
+  width: 27px; /* Ensure it's a perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Shows clickable cursor */
 }
+
+.btn-tertiary:focus,
+.btn-tertiary:active {
+  outline: none; /* Remove focus outline */
+  box-shadow: none; /* Remove any extra shadow */
+}
+
 
 /* Center the input fields */
 input {
-  width: 100%; /* Ensures full width */
+  width: 100% !important;
   max-width: 300px; /* Restricts maximum width */
   margin: 0 auto; /* Centers horizontally */
   display: block; /* Prevents inline issues */
 }
 
+
+input[type="password"] {
+  width: 100% ;  /* Ensures all password fields are the same width */
+  max-width: 225px; /* Adjust to your preferred width */
+  padding: 10px; /* Adds better spacing */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+input[name="old_password"] {
+  width: 100%;
+  max-width: 350px;  /* Adjust width to match new password fields */
+  padding: 10px;
+  box-sizing: border-box;
+  display: block;
+}
+
+
 /* Style the input group for alignment */
 .input-group {
   justify-content: center; /* Centers content inside */
+  display: flex;
+  align-items: center;
 }
 
 /* Center form inside the box */
@@ -261,6 +295,14 @@ form {
   flex-direction: column;
   align-items: center;
 }
+
+
+.form-control {
+  width: 100% !important;
+  max-width: 300px; /* Restricts maximum width */
+
+}
+
 
 
 .progress {
