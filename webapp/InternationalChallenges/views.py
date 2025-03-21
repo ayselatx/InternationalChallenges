@@ -7,6 +7,20 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.urls import path
 from django.http import JsonResponse, HttpResponse
 import requests
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import SensorData
+from django.shortcuts import render
+
+class SignUpView(CreateView):
+    model = User
+    form_class = UserCreationForm  # No need for a custom form
+    template_name = "registration/signup.html"
+    success_url = reverse_lazy("home")  # Redirects to home after signup
+
 
 def get_jwt_token(request):
     url = "http://127.0.0.1:8000/api/token/"
@@ -45,3 +59,14 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Login to get access & refresh token
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Refresh token
 ]
+
+
+def get_sensor_data(request):
+    # Récupérer les 10 dernières entrées dans la base de données
+    sensor_data = SensorData.objects.all().order_by('-timestamp')[:10]
+    
+    # Créer une liste avec les données à renvoyer
+    data = list(sensor_data.values('temperature', 'humidity', 'pressure', 'RSSI', 'SNR', 'timestamp'))
+    
+    # Renvoyer les données sous forme de réponse JSON
+    return JsonResponse(data, safe=False)
