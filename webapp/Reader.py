@@ -2,6 +2,7 @@ import serial
 import re
 import SensorData
 import dbContext
+import datetime
 
 class Reader:
     
@@ -35,7 +36,8 @@ class Reader:
         pressure = re.sub(r"[^\d.-]", "", data[2])
         rssi = re.sub(r"[^\d.-]", "", data[3])
         snr = re.sub(r"[^\d.-]", "", data[4])
-        return SensorData.SensorData(temperature, humidity, pressure, rssi, snr)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return SensorData.SensorData(temperature, humidity, pressure, rssi, snr, timestamp)
      
     def close(self):
         self.ser.close()

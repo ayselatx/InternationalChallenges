@@ -18,5 +18,10 @@ class dbContext:
         self.conn.close()
         
     def SaveData(self, data: SensorData.SensorData):
-        query = f"INSERT INTO InternationalChallenges_sensordata (temperature, humidity, pressure, RSSI, SNR) VALUES ({data.temperature}, {data.humidity}, {data.pressure}, {data.rssi}, {data.snr})"
-        self.execute(query)
+        query = """
+            INSERT INTO InternationalChallenges_sensordata 
+            (temperature, humidity, pressure, RSSI, SNR, timestamp) 
+            VALUES (?, ?, ?, ?, ?, ?)
+        """
+        self.cursor.execute(query, (data.temperature, data.humidity, data.pressure, data.rssi, data.snr, data.timestamp))
+        self.conn.commit()
