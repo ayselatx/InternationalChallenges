@@ -186,7 +186,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h1, .h1 {
 h2, .h2{
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Saira Condensed", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font: Roboto;
   font-weight: 700;
   line-height: 1.2;
