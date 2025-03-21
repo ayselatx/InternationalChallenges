@@ -188,6 +188,7 @@ h2, .h2{
   margin-bottom: 0.5rem;
   font-family: "Saira Condensed", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font: Roboto;
+  font-weight: bold !important;
   font-weight: 700;
   line-height: 1.2;
   color: #fff;
