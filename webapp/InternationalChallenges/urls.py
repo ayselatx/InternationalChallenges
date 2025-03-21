@@ -21,6 +21,7 @@ from .views import get_jwt_token
 from .views import home
 from .views import SignUpView  # Import your signup view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from . import views
 
 
 urlpatterns = [
@@ -33,5 +34,6 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("signup/", SignUpView.as_view(), name="signup"),  # Add this line
+    path('getSensorData/', views.get_sensor_data, name='getSensorData'),
 
 ]

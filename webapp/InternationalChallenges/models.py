@@ -6,4 +6,8 @@ class SensorData(models.Model):
     pressure = models.FloatField()
     RSSI = models.FloatField()
     SNR = models.FloatField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)  # Assurez-vous d'utiliser auto_now_add si vous voulez que le timestamp soit ajouté automatiquement
+
+    def __str__(self):
+        return f'{self.timestamp} - {self.temperature}°C'
+

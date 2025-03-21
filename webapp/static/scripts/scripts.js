@@ -1,8 +1,3 @@
-// Function to generate a random value within a given range
-function getRandomValue(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 // Function to update temperature progress bar
 function updateTemperature(value) {
     const progressBar = document.getElementById("progressBarTemperature");
@@ -15,7 +10,7 @@ function updateTemperature(value) {
 
 // Function to update humidity progress bar
 function updateHumidity(value) {
-    const progressBar = document.getElementById("progressBarHumidity"); // Vérifier que l'id est bien le bon
+    const progressBar = document.getElementById("progressBarHumidity");
     if (!progressBar) return;
     progressBar.style.width = value + "%";
     let element = document.getElementById("infoHumidity");
@@ -34,64 +29,120 @@ function updatePressure(value) {
     element.textContent = element.dataset.valeur;
 }
 
-
-// Initialize charts with Chart.js (temperature, humidity, pressure)
 document.addEventListener("DOMContentLoaded", function () {
-    var temperatureChart = new Chart(document.getElementById('temperatureChart'), {
+    // Référence aux éléments HTML pour les graphiques
+    const temperatureCanvas = document.getElementById('temperatureChart');
+    const humidityCanvas = document.getElementById('humidityChart');
+    const pressureCanvas = document.getElementById('pressureChart');
+
+    // Initialisation des graphiques avec Chart.js
+    var temperatureChart = new Chart(temperatureCanvas, {
         type: 'line',
-        data: { labels: [], datasets: [{ label: 'Temperature (°C)', data: [], borderColor: 'red', fill: true }] },
-        options: { responsive: true, scales: { x: { ticks: { color: 'white' } }, y: { ticks: { color: 'white' } } } }
-    });
-
-    var humidityChart = new Chart(document.getElementById('humidityChart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ label: 'Humidity (%)', data: [], borderColor: 'blue', fill: true }] },
-        options: { responsive: true, scales: { x: { ticks: { color: 'white' } }, y: { ticks: { color: 'white' } } } }
-    });
-
-    var pressureChart = new Chart(document.getElementById('pressureChart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ label: 'Pressure (hPa)', data: [], borderColor: 'green', fill: true }] },
-        options: { responsive: true, scales: { x: { ticks: { color: 'white' } }, y: { ticks: { color: 'white' } } } }
-    });
-
-    // Function to generate fake data and update charts
-    function updateFakeData() {
-        let newTemperature = getRandomValue(0, 50);
-        let newHumidity = getRandomValue(20, 100);
-        let newPressure = getRandomValue(950, 1050);
-        let currentTime = new Date().toLocaleTimeString();
-
-        // Update progress bars
-        updateTemperature(newTemperature);
-        updateHumidity(newHumidity);
-        updatePressure(newPressure);
-
-        // Update chart data
-        temperatureChart.data.labels.push(currentTime);
-        temperatureChart.data.datasets[0].data.push(newTemperature);
-        humidityChart.data.labels.push(currentTime);
-        humidityChart.data.datasets[0].data.push(newHumidity);
-        pressureChart.data.labels.push(currentTime);
-        pressureChart.data.datasets[0].data.push(newPressure);
-
-        // Keep only the last 10 data points
-        if (temperatureChart.data.labels.length > 50) {
-            temperatureChart.data.labels.shift();
-            temperatureChart.data.datasets[0].data.shift();
-            humidityChart.data.labels.shift();
-            humidityChart.data.datasets[0].data.shift();
-            pressureChart.data.labels.shift();
-            pressureChart.data.datasets[0].data.shift();
+        data: {
+            labels: [],  // Étiquettes des données (ici, c'est le timestamp)
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: [],  // Données de température
+                borderColor: 'red',  // Couleur de la ligne
+                fill: true  // Remplir la zone sous la courbe
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    ticks: { color: 'white' }
+                },
+                y: {
+                    ticks: { color: 'white' }
+                }
+            }
         }
+    });
 
-        // Update the charts
-        temperatureChart.update();
-        humidityChart.update();
-        pressureChart.update();
+    var humidityChart = new Chart(humidityCanvas, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Humidity (%)',
+                data: [],
+                borderColor: 'blue',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { ticks: { color: 'white' } },
+                y: { ticks: { color: 'white' } }
+            }
+        }
+    });
+
+    var pressureChart = new Chart(pressureCanvas, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Pressure (hPa)',
+                data: [],
+                borderColor: 'green',
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { ticks: { color: 'white' } },
+                y: { ticks: { color: 'white' } }
+            }
+        }
+    });
+
+    // Fonction pour récupérer les données du serveur Django et mettre à jour les graphiques
+    function fetchSensorData() {
+        fetch('/getSensorData/')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Vérifier les données récupérées
+
+                data.forEach(entry => {
+                    const currentTime = entry.timestamp;  // Utiliser le timestamp pour l'axe x
+
+                    // Mettre à jour les barres de progression
+                    updateTemperature(entry.temperature);
+                    updateHumidity(entry.humidity);
+                    updatePressure(entry.pressure);
+
+                    // Mettre à jour les données des graphiques
+                    temperatureChart.data.labels.push(currentTime);
+                    temperatureChart.data.datasets[0].data.push(entry.temperature);
+                    humidityChart.data.labels.push(currentTime);
+                    humidityChart.data.datasets[0].data.push(entry.humidity);
+                    pressureChart.data.labels.push(currentTime);
+                    pressureChart.data.datasets[0].data.push(entry.pressure);
+
+                    // Garder uniquement les 10 dernières données
+                    if (temperatureChart.data.labels.length > 10) {
+                        temperatureChart.data.labels.shift();
+                        temperatureChart.data.datasets[0].data.shift();
+                        humidityChart.data.labels.shift();
+                        humidityChart.data.datasets[0].data.shift();
+                        pressureChart.data.labels.shift();
+                        pressureChart.data.datasets[0].data.shift();
+                    }
+                });
+
+                // Mettre à jour les graphiques
+                temperatureChart.update();
+                humidityChart.update();
+                pressureChart.update();
+            })
+            .catch(error => console.error('Error fetching sensor data:', error));
     }
 
-    console.log("setInterval is running...");
-    // Automatically update fake data every 2 seconds
-    setInterval(updateFakeData, 2000);
+    // Appeler la fonction pour récupérer les données toutes les 2 secondes
+    setInterval(fetchSensorData, 2000);
 });
+
