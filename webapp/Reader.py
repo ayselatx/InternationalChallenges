@@ -7,7 +7,7 @@ import datetime
 class Reader:
     
     def __init__(self):
-        self.ser = serial.Serial('COM11', 115200, timeout=1)
+        self.ser = serial.Serial('/dev/ttyUSB1', 115200, timeout=1)
         
     def read(self) -> SensorData.SensorData:
         if self.ser.is_open:
