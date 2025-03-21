@@ -7,3 +7,5 @@
 #define HMAC_KEY_SIZE 64
 #define SHA_HASH_SIZE 32
 #define SHA_BLOCK_SIZE 64
+
+#define SHARED_DH_SIZE 32

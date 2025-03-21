@@ -4,11 +4,24 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <cstring>
 
-#pragma pack(push, 1)
 struct node_config {
   uint8_t aes_key[AES_KEY_SIZE];
   uint8_t hmac_key[HMAC_KEY_SIZE];
+  node_config(uint8_t aes_k[AES_KEY_SIZE], uint8_t hmac_k[HMAC_KEY_SIZE]) {
+    memcpy(aes_key, aes_k, AES_KEY_SIZE);
+    memcpy(hmac_key, hmac_k, HMAC_KEY_SIZE);
+  }
+};
+
+#pragma pack(push, 1)
+struct key_exchange_send {
+  uint32_t k;
+};
+
+struct key_exchange_accept {
+  uint8_t accept; // 0 or 1
 };
 
 struct dht_config {
@@ -33,7 +46,8 @@ enum command_type : uint8_t {
   BMP_MEASUREMENT = 1,
   DHT_CONFIG = 2,
   BMP_CONFIG = 3,
-  NODE_CONFIG = 4
+  KEY_EXCHANGE_SEND = 4,
+  KEY_EXCHANGE_ACCEPT = 5
 };
 
 struct send_message {
