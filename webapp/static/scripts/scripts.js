@@ -1,13 +1,9 @@
-<<<<<<< Updated upstream
-// Function to update temperature progress bar
-=======
 // Function to generate a random value within a given range
 function getRandomValue(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Function to update temperature progress bar (0°C to 50°C)
->>>>>>> Stashed changes
 function updateTemperature(value) {
     const overlay = document.getElementById("progressOverlayTemperature");
     if (!overlay) return;
@@ -24,11 +20,6 @@ function updateTemperature(value) {
 
 // Function to update humidity progress bar (0% to 100%)
 function updateHumidity(value) {
-<<<<<<< Updated upstream
-    const progressBar = document.getElementById("progressBarHumidity");
-    if (!progressBar) return;
-    progressBar.style.width = value + "%";
-=======
     const overlay = document.getElementById("progressOverlayHumidity");
     if (!overlay) return;
 
@@ -36,7 +27,6 @@ function updateHumidity(value) {
 
     overlay.style.width = (100 - percentage) + "%"; // Adjust white overlay
 
->>>>>>> Stashed changes
     let element = document.getElementById("infoHumidity");
     element.dataset.valeur = value + "%";
     element.textContent = element.dataset.valeur;
@@ -57,12 +47,9 @@ function updatePressure(value) {
     element.textContent = element.dataset.valeur;
 }
 
-<<<<<<< Updated upstream
-=======
 
 
 // Initialize charts with Chart.js (temperature, humidity, pressure)
->>>>>>> Stashed changes
 document.addEventListener("DOMContentLoaded", function () {
     // Référence aux éléments HTML pour les graphiques
     const temperatureCanvas = document.getElementById('temperatureChart');
