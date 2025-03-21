@@ -136,23 +136,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     updateHumidity(entry.humidity);
                     updatePressure(entry.pressure);
 
-                    // Mettre à jour les données des graphiques
-                    temperatureChart.data.labels.push(currentTime);
-                    temperatureChart.data.datasets[0].data.push(entry.temperature);
-                    humidityChart.data.labels.push(currentTime);
-                    humidityChart.data.datasets[0].data.push(entry.humidity);
-                    pressureChart.data.labels.push(currentTime);
-                    pressureChart.data.datasets[0].data.push(entry.pressure);
+                        // Mettre à jour les données des graphiques
+                    temperatureChart.data.labels.unshift(currentTime); // Ajouter au début
+                    temperatureChart.data.datasets[0].data.unshift(entry.temperature); // Ajouter au début
+                    humidityChart.data.labels.unshift(currentTime); // Ajouter au début
+                    humidityChart.data.datasets[0].data.unshift(entry.humidity); // Ajouter au début
+                    pressureChart.data.labels.unshift(currentTime); // Ajouter au début
+                    pressureChart.data.datasets[0].data.unshift(entry.pressure); // Ajouter au début
 
-                    // Garder uniquement les 10 dernières données
-                    if (temperatureChart.data.labels.length > 10) {
-                        temperatureChart.data.labels.shift();
-                        temperatureChart.data.datasets[0].data.shift();
-                        humidityChart.data.labels.shift();
-                        humidityChart.data.datasets[0].data.shift();
-                        pressureChart.data.labels.shift();
-                        pressureChart.data.datasets[0].data.shift();
-                    }
+
+                // Garder uniquement les 10 dernières données
+                if (temperatureChart.data.labels.length > 10) {
+                    temperatureChart.data.labels.pop();  // Supprimer à la fin
+                    temperatureChart.data.datasets[0].data.pop();  // Supprimer à la fin
+                    humidityChart.data.labels.pop();  // Supprimer à la fin
+                    humidityChart.data.datasets[0].data.pop();  // Supprimer à la fin
+                    pressureChart.data.labels.pop();  // Supprimer à la fin
+                }
                 });
 
                 // Mettre à jour les graphiques
