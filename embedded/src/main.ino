@@ -24,11 +24,6 @@ node_config *current_config =
 
 CryptoAdapter *crypto = new CryptoAdapter(current_config);
 
-size_t MAX_MESSAGE_SIZE = CryptoAdapter::toValidSize(
-    sizeof(send_message) + // Base size of send_message (without data[])
-    sizeof(message_data) + // Base size of message_data (without data[])
-    sizeof(node_config));  // Max size of any payload (from the union)
-
 size_t buffer_size = 2 * MAX_MESSAGE_SIZE;
 
 send_message *in_message = (send_message *)malloc(buffer_size);
@@ -55,6 +50,7 @@ void loop() {
 
   message_data *out_mess_data = (message_data *)out_message->data;
   {
+    // TAKING THE MEASUREMENT
     out_mess_data->command = DHT_MEASUREMENT;
     dht_measurement *meas = (dht_measurement *)out_mess_data->data;
     meas->humidity = os_random();
@@ -64,19 +60,17 @@ void loop() {
 
     Serial.printf("HUM BEFORE: %d, TEMP BEFORE: %d \n", meas->humidity,
                   meas->temperature);
-  }
 
-  // // logging
-  // {
-  //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
-  //   for (int i = 0; i < out_msg_data_size; i++) {
-  //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
-  //   }
-  //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
-  // }
+    // // logging
+    // {
+    //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
+    //   for (int i = 0; i < out_msg_data_size; i++) {
+    //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+    //   }
+    //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
+    // }
 
-  // encryption
-  {
+    // encryption
     encrypt_error err =
         crypto->encryptMessage(out_buff, out_message, out_msg_data_size);
     if (err != encrypt_error::OK) {
@@ -84,24 +78,26 @@ void loop() {
       return;
     }
     // TODO: SEND THE OUT_BUFF TO THE OTHER NODE
-  }
 
-  // // logging
-  // {
-  //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
-  //   for (int i = 0; i < out_msg_data_size; i++) {
-  //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
-  //   }
-  //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
-  // }
+    // // logging
+    // {
+    //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
+    //   for (int i = 0; i < out_msg_data_size; i++) {
+    //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+    //   }
+    //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
+    // }
+  }
 
   // decryption
   {
+    // MOCK DATA FROM THE REMOTE NODE
     in_msg_data_size = out_msg_data_size;
+    memcpy(in_buff, out_buff, in_msg_data_size);
     // TODO: GET THE MESSAGE FROM THE OTHER NODE TO IN_BUFF
 
     decrypt_error err =
-        crypto->decryptMessage(in_buff, out_message, in_msg_data_size);
+        crypto->decryptMessage(in_buff, out_buff, in_msg_data_size);
     if (err != decrypt_error::OK) {
       Serial.println("Error decrypting message.");
       return;

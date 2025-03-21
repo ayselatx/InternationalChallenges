@@ -15,6 +15,11 @@
 // std libs
 #include <algorithm>
 
+size_t MAX_MESSAGE_SIZE = CryptoAdapter::toValidSize(
+    sizeof(send_message) +    // Base size of send_message (without data[])
+    sizeof(message_data) +    // Base size of message_data (without data[])
+    sizeof(dht_measurement)); // Max size of any payload (from the union)
+
 enum class encrypt_error : uint8_t { OK, BAD_DATA_LENGTH };
 enum class decrypt_error : uint8_t { OK, BAD_DATA_LENGTH, WRONG_HASH };
 
