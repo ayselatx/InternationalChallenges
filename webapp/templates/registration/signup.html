@@ -3,7 +3,10 @@
 {% block title %}Create Account{% endblock %}
 
 {% load static %}
+
+{% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="vh-100 gradient-custom d-flex flex-column">
@@ -20,6 +23,13 @@
                     <div class="input-group w-100 justify-content-center">
                         {{ form.username }}
                     </div>
+                    {% if form.username.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.username.errors %}
+                                <small>{{ error }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3 text-center">
@@ -27,6 +37,17 @@
                     <div class="input-group w-100 justify-content-center">
                         {{ form.password1 }}
                     </div>
+                    {% if form.password1.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.password1.errors %}
+                                <small>{{ error }}</small><br>
+                            {% endfor %}
+                            <div id="password-error-container" class="d-flex align-items-center mt-1" style="display: none;">
+                                <div id="password-error" class="text-danger"></div>
+                                <button id="password-info-btn" class="btn btn-sm btn-warning ms-2" style="display: none;">?</button>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3 text-center">
@@ -34,6 +55,13 @@
                     <div class="input-group w-100 justify-content-center">
                         {{ form.password2 }}
                     </div>
+                    {% if form.password2.errors %}
+                        <div class="text-danger mt-1">
+                            {% for error in form.password2.errors %}
+                                <small>{{ error }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Sign Up</button>
@@ -44,6 +72,88 @@
             </p>
         </div>
     </div>
-
 </section>
+
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if form.errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <li><strong>{{ field }}</strong>: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordField = document.querySelector("#id_password1");
+        const confirmPasswordField = document.querySelector("#id_password2");
+        const submitButton = document.querySelector("button[type='submit']");
+        
+        const passwordErrorContainer = document.querySelector("#password-error-container");
+        const passwordErrorDiv = document.querySelector("#password-error");
+        const passwordInfoBtn = document.querySelector("#password-info-btn");
+
+        function validatePassword() {
+            const password = passwordField.value;
+            const confirmPassword = confirmPasswordField.value;
+            let errors = [];
+
+            // Password strength checks
+            if (password.length < 8) {
+                errors.push("⚠️ Must be at least 8 characters.");
+            }
+            if (!/[A-Z]/.test(password)) {
+                errors.push("⚠️ Must contain an uppercase letter.");
+            }
+            if (!/[0-9]/.test(password)) {
+                errors.push("⚠️ Must contain a number.");
+            }
+            if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) {
+                errors.push("⚠️ Must contain a special character.");
+            }
+
+            // Hide errors when user starts typing in password field
+            if (password.length > 0) {
+                passwordErrorContainer.style.display = "none";  
+            } else if (errors.length > 0) {
+                passwordErrorDiv.innerHTML = errors.join("<br>");
+                passwordErrorContainer.style.display = "flex";
+            }
+
+            
+
+            // Password confirmation error
+            const confirmPasswordError = document.querySelector("#id_password2 + .text-danger");
+            if (password !== confirmPassword && confirmPassword.length > 0) {
+                confirmPasswordError.innerHTML = "<small>Passwords do not match.</small>";
+            } else {
+                confirmPasswordError.innerHTML = ""; // Clear error when matched
+            }
+
+            submitButton.disabled = errors.length > 0 || (confirmPassword.length > 0 && password !== confirmPassword);
+        }
+
+        // Event listeners
+        passwordField.addEventListener("input", validatePassword);
+        confirmPasswordField.addEventListener("input", validatePassword);
+    });
+</script>
+
+
+
+{% endblock %}
+
