@@ -186,7 +186,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h1, .h1 {
 h2, .h2{
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font: Roboto;
   font-weight: 700;
   line-height: 1.2;
   color: #fff;
@@ -311,47 +312,44 @@ form {
 }
 
 
-
 .progress {
   position: relative;
-  height: 30px !important; /* Adjust the height for thicker bars */
-  border-radius: 15px; /* Make it more rounded */
-  background-color: white; /* Background color for unfilled part */
+  height: 30px !important; /* Thicker bars */
+  border-radius: 15px;
+  background-color: white; /* Unfilled background */
   overflow: hidden;
 }
 
-.progress-bar-temp {
+.progress-bar-temp,
+.progress-bar-humidity,
+.progress-bar-pressure {
+  width: 100%; /* Always full */
   height: 100%;
-  background: linear-gradient(to right, rgb(128, 222, 236) 0%, white 50%, rgb(228, 155, 155) 100%);
   position: absolute;
   left: 0;
   top: 0;
-  transition: width 0.3s ease-in-out;
+}
+
+
+.progress-bar-temp {
+  background: linear-gradient(to right, rgb(36, 203, 228) 0%, rgb(202, 200, 200) 50%, rgb(249, 77, 77) 100%);
 }
 
 .progress-bar-humidity {
-  height: 100%;
-  background: linear-gradient(to right, rgb(206, 224, 226) 0%, rgb(23, 155, 226) 100%);
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: width 0.3s ease-in-out;
+  background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(0, 145, 255) 100%);
 }
 
 .progress-bar-pressure {
-  height: 100%;
-  background: linear-gradient(to right, rgb(158, 236, 128) 0%, rgb(241, 240, 160) 50%, rgb(228, 155, 155) 100%);
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: width 0.3s ease-in-out;
+  background: linear-gradient(to right, rgb(171, 245, 142) 0%, rgb(237, 236, 170) 50%, rgb(249, 132, 132) 100%);
 }
 
+/* White overlay that adjusts dynamically */
 .progress-overlay {
   position: absolute;
   right: 0;
   top: 0;
   height: 100%;
+  width: 50%; /* Example: Adjust dynamically with JS */
   background: white;
   transition: width 0.3s ease-in-out;
 }
