@@ -303,6 +303,13 @@ form {
 
 }
 
+.form-outline input {
+  width: 100% !important;  /* Ensures all inputs take full width */
+  max-width: 200px !important; /* Adjust as needed */
+  display: block;  /* Prevents inline issues */
+  margin: 0 auto;  /* Centers the input field */
+}
+
 
 
 .progress {
