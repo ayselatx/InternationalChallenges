@@ -6,9 +6,10 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<script src="{% static 'scripts/scripts.js' %}"></script>
 
 {% block content %}
+<script src="{% static 'scripts/scripts.js' %}" defer></script>
+
 <section class="min-vh-100 gradient-custom">
 
 
@@ -103,11 +104,6 @@ Account settings:
                 </div>
             </div>
         </div>
-        </div>
-        <div class="d-flex justify-content-center mt-4">
-            <button class = "btn-primary" onclick="updateTemperature(159)">Temperature</button>
-            <button class = "btn-primary" onclick="updateHumidity(60)">Humidity</button>
-            <button class = "btn-primary" onclick="updatePressure(1900)">Pressure</button>
         </div>
 	</div>
 </div>
