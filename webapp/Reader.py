@@ -3,7 +3,7 @@ import re
 import SensorData
 import dbContext
 import datetime
-
+tgrtime.sleep(1)
 class Reader:
     
     def __init__(self):
