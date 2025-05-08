@@ -36,7 +36,7 @@ environ.Env.read_env()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com', 'localhost', '127.0.0.1']
 
@@ -185,10 +185,10 @@ LOGOUT_REDIRECT_URL = "home"
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
-CSRF_COOKIE_SECURE = True  # si HTTPS activé
-SESSION_COOKIE_SECURE = True  # si HTTPS activé
-SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = not DEBUG
+CSRF_COOKIE_SECURE = False  # si HTTPS activé
+SESSION_COOKIE_SECURE = False  # si HTTPS activé
+SESSION_COOKIE_HTTPONLY = False
+SECURE_SSL_REDIRECT = False
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
