@@ -12,7 +12,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from InternationalChallenges.validators import ComplexityValidator
 import os
+import environ
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,14 +29,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_dmw^)nnx-u&s5q(2#bg!db)2g4v5gmyrj_0#vmu$!yqzs=$5-'
+# SECRET_KEY = 'django-insecure-_dmw^)nnx-u&s5q(2#bg!db)2g4v5gmyrj_0#vmu$!yqzs=$5-'
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [
-    '*'
-]
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -44,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'InternationalChallenges',
     'rest_framework_simplejwt',
+    'django_extensions',
     'accounts', # our own app for registration
 ]
 
@@ -86,9 +97,12 @@ WSGI_APPLICATION = 'InternationalChallenges.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / env('DB_NAME'),
     }
 }
+
+SECRET_KEY = env('SECRET_KEY')
 
 
 # Password validation
@@ -107,7 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+        {
+        'NAME': 'InternationalChallenges.validators.ComplexityValidator',
+    },
 ]
+
 
 
 # Internationalization
@@ -127,10 +145,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+# settings.py
+
 STATIC_URL = '/static/'
+
+# Si vous avez des fichiers statiques dans un autre dossier, par exemple "static" à la racine de votre projet :
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    BASE_DIR / "static",  # Si vos fichiers sont dans un dossier 'static' à la racine du projet
 ]
+
+# Définissez STATIC_ROOT uniquement si vous utilisez collectstatic (en production).
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -156,3 +181,16 @@ SIMPLE_JWT = {
 # The urls the user is redirected to after a successful login or logout
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+CSRF_COOKIE_SECURE = True  # si HTTPS activé
+SESSION_COOKIE_SECURE = True  # si HTTPS activé
+SESSION_COOKIE_HTTPONLY = True
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+#SESSION_COOKIE_AGE = # à définir

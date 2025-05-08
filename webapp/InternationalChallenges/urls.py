@@ -22,6 +22,10 @@ from .views import home
 from .views import SignUpView  # Import your signup view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from pathlib import Path
+
 
 
 urlpatterns = [
@@ -36,4 +40,4 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="signup"),  # Add this line
     path('getSensorData/', views.get_sensor_data, name='getSensorData'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
