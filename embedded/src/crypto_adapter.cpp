@@ -51,7 +51,7 @@ encrypt_error CryptoAdapter::encryptData(uint8_t *output_data,
 decrypt_error CryptoAdapter::decryptData(uint8_t *output_data,
                                          const uint8_t *input_data,
                                          uint32_t data_length,
-                                         uint8_t iv[IV_LENGTH]) {
+                                         const uint8_t iv[IV_LENGTH]) {
   if (!isCorrectDataLength(data_length))
     return decrypt_error::BAD_DATA_LENGTH;
 
@@ -81,7 +81,8 @@ encrypt_error CryptoAdapter::encryptMessage(send_message *output_msg,
     return encrypt_error::BAD_DATA_LENGTH;
 
   os_get_random(output_msg->iv, IV_LENGTH);
-  this->computeHash(output_msg->data, data_length, output_msg->hash);
+  // this->computeHash(output_msg->data, data_length, output_msg->hash);
+  this->computeHash(input_msg->data, data_length, output_msg->hash);
 
   this->encryptData(output_msg->data, input_msg->data, data_length,
                     output_msg->iv);
@@ -95,8 +96,10 @@ decrypt_error CryptoAdapter::decryptMessage(send_message *output_msg,
   if (!isCorrectDataLength(data_length))
     return decrypt_error::BAD_DATA_LENGTH;
 
+  // this->decryptData(output_msg->data, input_msg->data, data_length,
+  //                   output_msg->iv);
   this->decryptData(output_msg->data, input_msg->data, data_length,
-                    output_msg->iv);
+                    input_msg->iv);
 
   uint8_t hash[SHA_HASH_SIZE];
   this->computeHash(output_msg->data, data_length, hash);

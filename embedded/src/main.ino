@@ -70,6 +70,11 @@ void loop() {
     //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
     // }
 
+    uint8_t *payload_start = out_message->data;
+    uint32_t payload_written = sizeof(message_data) + sizeof(dht_measurement);
+    memset(payload_start + payload_written, 0,
+           out_msg_data_size - payload_written);
+
     // encryption
     encrypt_error err =
         crypto->encryptMessage(out_buff, out_message, out_msg_data_size);
@@ -91,19 +96,30 @@ void loop() {
 
   // decryption
   {
-    // MOCK DATA FROM THE REMOTE NODE
+    // // MOCK DATA FROM THE REMOTE NODE
+    // in_msg_data_size = out_msg_data_size;
+    // memcpy(in_buff, out_buff, in_msg_data_size);
+    // // TODO: GET THE MESSAGE FROM THE OTHER NODE TO IN_BUFF
+
+    // decrypt_error err =
+    //     crypto->decryptMessage(in_buff, out_buff, in_msg_data_size);
+    // if (err != decrypt_error::OK) {
+    //   Serial.println("Error decrypting message.");
+    //   return;
+    // }
+
     in_msg_data_size = out_msg_data_size;
     memcpy(in_buff, out_buff, in_msg_data_size);
-    // TODO: GET THE MESSAGE FROM THE OTHER NODE TO IN_BUFF
 
-    decrypt_error err =
-        crypto->decryptMessage(in_buff, out_buff, in_msg_data_size);
+    decrypt_error err = crypto->decryptMessage(
+        in_message, in_buff, in_msg_data_size); // <- use in_message
     if (err != decrypt_error::OK) {
       Serial.println("Error decrypting message.");
       return;
     }
-    Serial.println("GOD HELP ME MAKE THIS WORK");
-    message_data *data = (message_data *)in_buff->data;
+
+    message_data *data =
+        (message_data *)in_message->data; // <- access decrypted message
     dht_measurement *meas = (dht_measurement *)data->data;
     Serial.printf("HUM AFTER: %d, TEMP AFTER: %d \n", meas->humidity,
                   meas->temperature);
