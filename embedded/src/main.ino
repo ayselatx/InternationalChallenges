@@ -115,6 +115,7 @@ void loop() {
         in_message, in_buff, in_msg_data_size); // <- use in_message
     if (err != decrypt_error::OK) {
       Serial.println("Error decrypting message.");
+      Serial.println(uint8_t(err));
       return;
     }
 
