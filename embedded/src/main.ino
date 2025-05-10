@@ -84,14 +84,14 @@ void loop() {
     }
     // TODO: SEND THE OUT_BUFF TO THE OTHER NODE
 
-    // // logging
-    // {
-    //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
-    //   for (int i = 0; i < out_msg_data_size; i++) {
-    //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
-    //   }
-    //   Serial.println("OUT_BUFF AFTER ENCRYPTION");
-    // }
+    // logging
+    {
+      Serial.println("OUT_BUFF AFTER ENCRYPTION");
+      for (int i = 0; i < out_msg_data_size; i++) {
+        Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+      }
+      Serial.println("OUT_BUFF AFTER ENCRYPTION");
+    }
   }
 
   // decryption
