@@ -64,8 +64,8 @@ void loop() {
     // logging
     {
       Serial.println("OUT_BUFF BEFORE ENCRYPTION");
-      for (int i = 0; i < out_msg_data_size; i++) {
-        Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+      for (int i = 0; i < buffer_size; i++) {
+        Serial.printf("0x02%x ", ((uint8_t *)out_buff)[i]);
       }
       Serial.println("OUT_BUFF BEFORE ENCRYPTION");
     }
@@ -87,8 +87,8 @@ void loop() {
     // logging
     {
       Serial.println("OUT_BUFF AFTER ENCRYPTION");
-      for (int i = 0; i < out_msg_data_size; i++) {
-        Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+      for (int i = 0; i < buffer_size; i++) {
+        Serial.printf("0x02%x ", ((uint8_t *)out_buff)[i]);
       }
       Serial.println("OUT_BUFF AFTER ENCRYPTION");
     }
