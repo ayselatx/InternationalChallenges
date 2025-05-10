@@ -17,7 +17,7 @@ uint8_t default_hmac_key[HMAC_KEY_SIZE] = {
     122, 15,  17,  25,  138, 162, 48,  141, 198, 196, 133, 18,  103, 218, 248,
     196, 236, 212, 40,  76,  12,  15,  122, 15,  17,  25,  138, 162, 48};
 
-// TODO: this needs to be saveable in EEPROM so that the key changes are
+// FEATURE: this needs to be saveable in EEPROM so that the key changes are
 // presistent
 node_config *current_config =
     new node_config(default_aes_key, default_hmac_key);
@@ -95,8 +95,8 @@ void loop() {
       }
       Serial.println("OUT_BUFF AFTER ENCRYPTION");
     }
-  }
 #endif
+  }
 
   // decryption
   {
