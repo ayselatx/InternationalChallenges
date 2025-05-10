@@ -61,14 +61,14 @@ void loop() {
     Serial.printf("HUM BEFORE: %d, TEMP BEFORE: %d \n", meas->humidity,
                   meas->temperature);
 
-    // // logging
-    // {
-    //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
-    //   for (int i = 0; i < out_msg_data_size; i++) {
-    //     Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
-    //   }
-    //   Serial.println("OUT_BUFF BEFORE ENCRYPTION");
-    // }
+    // logging
+    {
+      Serial.println("OUT_BUFF BEFORE ENCRYPTION");
+      for (int i = 0; i < out_msg_data_size; i++) {
+        Serial.printf("0x02%x ", ((uint8_t *)out_mess_data)[i]);
+      }
+      Serial.println("OUT_BUFF BEFORE ENCRYPTION");
+    }
 
     uint8_t *payload_start = out_message->data;
     uint32_t payload_written = sizeof(message_data) + sizeof(dht_measurement);
