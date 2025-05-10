@@ -8,6 +8,7 @@
 
 // arduino libs
 #include <AES.h>
+#include <Arduino.h>
 #include <CTR.h>
 #include <SHA256.h>
 
@@ -43,6 +44,7 @@ encrypt_error CryptoAdapter::encryptData(uint8_t *output_data,
     return encrypt_error::BAD_DATA_LENGTH;
 
   _ctr.setIV(iv, IV_LENGTH);
+  Serial.printf("%s (len: %d)\n", "Calling internal encrypt.", data_length);
   _ctr.encrypt(output_data, input_data, data_length);
 
   return encrypt_error::OK;
