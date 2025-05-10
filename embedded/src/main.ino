@@ -61,7 +61,8 @@ void loop() {
     Serial.printf("HUM BEFORE: %d, TEMP BEFORE: %d \n", meas->humidity,
                   meas->temperature);
 
-    // logging
+// logging
+#ifdef DEBUG
     {
       Serial.println("OUT_BUFF BEFORE ENCRYPTION");
       for (int i = 0; i < buffer_size; i++) {
@@ -69,6 +70,7 @@ void loop() {
       }
       Serial.println("OUT_BUFF BEFORE ENCRYPTION");
     }
+#endif
 
     uint8_t *payload_start = out_message->data;
     uint32_t payload_written = sizeof(message_data) + sizeof(dht_measurement);
@@ -82,9 +84,10 @@ void loop() {
       Serial.println("Error encrypting message.");
       return;
     }
-    // TODO: SEND THE OUT_BUFF TO THE OTHER NODE
+// TODO: SEND THE OUT_BUFF TO THE OTHER NODE
 
-    // logging
+// logging
+#ifdef DEBUG
     {
       Serial.println("OUT_BUFF AFTER ENCRYPTION");
       for (int i = 0; i < buffer_size; i++) {
@@ -93,6 +96,7 @@ void loop() {
       Serial.println("OUT_BUFF AFTER ENCRYPTION");
     }
   }
+#endif
 
   // decryption
   {
@@ -114,8 +118,8 @@ void loop() {
     decrypt_error err = crypto->decryptMessage(
         in_message, in_buff, in_msg_data_size); // <- use in_message
     if (err != decrypt_error::OK) {
-      Serial.println("Error decrypting message.");
-      Serial.println(uint8_t(err));
+      Serial.printf("%s (errno: %d)", "Error decrypting message.",
+                    uint8_t(err));
       return;
     }
 
